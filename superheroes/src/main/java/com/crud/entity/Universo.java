@@ -14,10 +14,10 @@ import jakarta.persistence.Table;
 public class Universo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "universo_id", unique = true)
+	@Column(name = "universo_id", unique = true, nullable = false)
 	private Long universoId;
 	
 	@Column(name = "nombre_universo", nullable = false)
@@ -35,4 +35,5 @@ public class Universo implements Serializable {
 	public void setNombreUniverso(String nombreUniverso) {
 		this.nombreUniverso = nombreUniverso;
 	}
+
 }

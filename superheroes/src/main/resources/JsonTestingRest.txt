@@ -7,7 +7,7 @@ http://localhost:8088/superheroe/create
     "heroe_id": 1,
     "nombre": "Ironman",
     "genero": "masculino",
-    "es_vivo": true,
+    "estado": true,
     "universo": {     
         "universo_id": 1,   
         "nombreUniverso": "Marvel"
@@ -34,7 +34,7 @@ http://localhost:8088/superheroe/create
     "heroe_id": 2,
     "nombre": "Superman",
     "genero": "masculino",
-    "es_vivo": true,
+    "estado": true,
     "universo": {     
         "universo_id": 2,   
         "nombreUniverso": "D.C."

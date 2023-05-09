@@ -34,8 +34,8 @@ public class Superheroe implements Serializable {
 	@Column(name = "genero", nullable = false)
 	private String genero;
 
-	@Column(name = "es_vivo", nullable = false)
-	private boolean vivo = true;
+	@Column(name = "estado", nullable = false)
+	private boolean estado = true;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(foreignKey = @ForeignKey(name = "uni_id"), name = "universo_id", insertable = true, updatable = true)
@@ -72,12 +72,12 @@ public class Superheroe implements Serializable {
 		this.genero = genero;
 	}
 
-	public boolean isVivo() {
-		return vivo;
+	public boolean isEstado() {
+		return estado;
 	}
 
-	public void setVivo(boolean vivo) {
-		this.vivo = vivo;
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	public Universo getUniverso() {

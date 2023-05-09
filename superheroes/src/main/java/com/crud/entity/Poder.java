@@ -11,13 +11,13 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class Poder implements Serializable{
-
+public class Poder  implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "poder_id", unique = true)
+	@Column(name = "poder_id", unique = true, nullable = false)
 	private Long poderId;
 	
 	@Column(name = "tipo_poder", nullable = false)
