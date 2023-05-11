@@ -2,19 +2,24 @@ package com.crud.dto;
 
 import java.util.List;
 
+/**
+ * @author jrcrespo
+ *
+ */
 public class SuperheroeDTO {
 
-    private Long id;
+    private Long superheroeId;
     private String nombre;
-    private List<String> poderes;
-    private String universo;
-    private boolean estado;
-    
-	public Long getId() {
-		return id;
+    private String genero;
+    private boolean estado;    
+    private UniversoDTO universo;
+    private List<PoderDTO> poderes;   
+	
+	public Long getSuperheroeId() {
+		return superheroeId;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setSuperheroeId(Long superheroeId) {
+		this.superheroeId = superheroeId;
 	}
 	public String getNombre() {
 		return nombre;
@@ -22,22 +27,30 @@ public class SuperheroeDTO {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public List<String> getPoderes() {
-		return poderes;
+	public String getGenero() {
+		return genero;
 	}
-	public void setPoderes(List<String> poderes) {
-		this.poderes = poderes;
-	}
-	public String getUniverso() {
-		return universo;
-	}
-	public void setUniverso(String universo) {
-		this.universo = universo;
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 	public boolean isEstado() {
 		return estado;
 	}
 	public void setEstado(boolean estado) {
 		this.estado = estado;
-	}		
+	}
+	public UniversoDTO getUniverso() {
+		return universo;
+	}
+	public void setUniverso(UniversoDTO universo) {
+		this.universo = universo;
+	}
+	public List<PoderDTO> getPoderes() {
+		return poderes;
+	}
+	public void setPoderes(List<PoderDTO> list) {
+		this.poderes = list;
+	}
+    
+    
 }

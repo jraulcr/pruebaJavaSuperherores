@@ -17,14 +17,18 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/**
+ * @author jrcrespo
+ *
+ */
 @Entity
-@Table
+@Table(name = "superheroes")
 public class Superheroe implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "heroe_id", unique = true, nullable = false)
 	private Long heroeId;
 
@@ -36,12 +40,16 @@ public class Superheroe implements Serializable {
 
 	@Column(name = "estado", nullable = false)
 	private boolean estado = true;
-
+	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(foreignKey = @ForeignKey(name = "uni_id"), name = "universo_id", insertable = true, updatable = true)
+	@JoinColumn(name = "universo_id", referencedColumnName = "universo_id", foreignKey = @ForeignKey(name = "uni_id"))
 	private Universo universo;
+	
+	
+    @Column(name = "universo_id", insertable = false, updatable = false)
+    private Long universoId;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "superheroe_poderes", foreignKey = @ForeignKey(name = "heroe_id_fk"), 
 	joinColumns = @JoinColumn(name = "heroe_id", nullable = false, referencedColumnName = "heroe_id", insertable = true, updatable = true), 
 	inverseForeignKey = @ForeignKey(name = "poder_id_fk"), 
@@ -96,4 +104,13 @@ public class Superheroe implements Serializable {
 		this.poderes = poderes;
 	}
 
+//	public List<Universo> getUniversos() {
+//		return universos;
+//	}
+//
+//	public void setUniversos(List<Universo> universos) {
+//		this.universos = universos;
+//	}
+	
+	
 }

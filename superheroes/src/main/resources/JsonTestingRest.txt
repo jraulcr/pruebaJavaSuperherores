@@ -4,52 +4,75 @@ http://localhost:8088/superheroe/create
 
 
 {    
-    "heroe_id": 1,
+    "superheroeId": 1,
     "nombre": "Ironman",
     "genero": "masculino",
     "estado": true,
     "universo": {     
-        "universo_id": 1,   
+        "universoId": 1,   
         "nombreUniverso": "Marvel"
     },
     "poderes":[
         {
-            "poder_id": 1,
+            "poderId": 1,
             "tipoPoder": "Ojos laser"        
         },
         {
-            "poder_id": 2,  
+            "poderId": 2,  
             "tipoPoder": "Armadura"        
         },
         {
-            "poder_id": 3,
+            "poderId": 3,
             "tipoPoder": "Vuelo"        
         }  
          
     ]
-}
-
-
+},
 {    
-    "heroe_id": 2,
+    "superheroeId": 2,
     "nombre": "Superman",
     "genero": "masculino",
     "estado": true,
     "universo": {     
-        "universo_id": 2,   
+        "universoId": 2,   
         "nombreUniverso": "D.C."
     },
     "poderes":[
         {
-            "poder_id": 1,
+            "poderId": 1,
             "tipoPoder": "Ojos laser"        
         },
         {
-            "poder_id": 4,  
+            "poderId": 4,  
             "tipoPoder": "Superfuerza"        
         },
         {
-            "poder_id": 3,
+            "poderId": 3,
+            "tipoPoder": "Vuelo"        
+        }  
+         
+    ]
+},
+{    
+    "superheroeId": 3,
+    "nombre": "Mujer Maravilla",
+    "genero": "femenino",
+    "estado": true,
+    "universo": {     
+        "universoId": 2,   
+        "nombreUniverso": "D.C."
+    },
+    "poderes":[
+        {
+            "poderId": 5,
+            "tipoPoder": "Inmortal"        
+        },
+        {
+            "poderId": 4,  
+            "tipoPoder": "Superfuerza"        
+        },
+        {
+            "poderId": 3,
             "tipoPoder": "Vuelo"        
         }  
          
