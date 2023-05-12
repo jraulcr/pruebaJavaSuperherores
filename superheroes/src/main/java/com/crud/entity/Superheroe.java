@@ -39,7 +39,7 @@ public class Superheroe implements Serializable {
 	private String genero;
 
 	@Column(name = "estado", nullable = false)
-	private boolean estado = true;
+	private String estado;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "universo_id", referencedColumnName = "universo_id", foreignKey = @ForeignKey(name = "uni_id"))
@@ -80,11 +80,11 @@ public class Superheroe implements Serializable {
 		this.genero = genero;
 	}
 
-	public boolean isEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(boolean estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 
@@ -103,14 +103,5 @@ public class Superheroe implements Serializable {
 	public void setPoderes(List<Poder> poderes) {
 		this.poderes = poderes;
 	}
-
-//	public List<Universo> getUniversos() {
-//		return universos;
-//	}
-//
-//	public void setUniversos(List<Universo> universos) {
-//		this.universos = universos;
-//	}
-	
 	
 }

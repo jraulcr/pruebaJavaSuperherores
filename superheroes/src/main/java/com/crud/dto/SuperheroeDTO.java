@@ -11,7 +11,7 @@ public class SuperheroeDTO {
     private Long superheroeId;
     private String nombre;
     private String genero;
-    private boolean estado;    
+    private String estado;    
     private UniversoDTO universo;
     private List<PoderDTO> poderes;   
 	
@@ -33,10 +33,10 @@ public class SuperheroeDTO {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-	public boolean isEstado() {
+	public String getEstado() {
 		return estado;
 	}
-	public void setEstado(boolean estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 	public UniversoDTO getUniverso() {
@@ -50,7 +50,5 @@ public class SuperheroeDTO {
 	}
 	public void setPoderes(List<PoderDTO> list) {
 		this.poderes = list;
-	}
-    
-    
+	}    
 }
