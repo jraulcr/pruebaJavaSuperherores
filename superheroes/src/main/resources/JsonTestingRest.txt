@@ -1,0 +1,85 @@
+
+
+http://localhost:8088/superheroe/create
+
+
+{    
+    "superheroeId": 1,
+    "nombre": "Ironman",
+    "genero": "Masculino",
+    "estado": "Vivo",
+    "universo": {     
+        "universoId": 1,   
+        "nombreUniverso": "Marvel"
+    },
+    "poderes":[
+        {
+            "poderId": 1,
+            "tipoPoder": "Ojos laser"        
+        },
+        {
+            "poderId": 2,  
+            "tipoPoder": "Armadura"        
+        },
+        {
+            "poderId": 3,
+            "tipoPoder": "Vuelo"        
+        }  
+         
+    ]
+}
+
+{    
+    "superheroeId": 2,
+    "nombre": "Mujer Maravilla",
+    "genero": "Femenino",
+    "estado": "Vivo",
+    "universo": {     
+        "universoId": 2,   
+        "nombreUniverso": "D.C."
+    },
+    "poderes":[
+        {
+            "poderId": 4,
+            "tipoPoder": "Inmortal"        
+        },
+        {
+            "poderId": 5,  
+            "tipoPoder": "Superfuerza"        
+        },
+        {
+            "poderId": 3,
+            "tipoPoder": "Vuelo"        
+        }  
+         
+    ]
+}
+
+
+{    
+    "superheroeId": 3,
+    "nombre": "Bloodshoot",
+    "genero": "Masculino",
+    "estado": "Vivo",
+    "universo": {     
+        "universoId": 3,   
+        "nombreUniverso": "Valiant"
+    },
+    "poderes":[
+        {
+            "poderId": 4,
+            "tipoPoder": "Superfuerza"        
+        },
+        {
+            "poderId": 6,  
+            "tipoPoder": "Regeneración"        
+        },
+        {
+            "poderId": 7,
+            "tipoPoder": "Nanorobots"        
+        }  
+         
+    ]
+}
+
+
