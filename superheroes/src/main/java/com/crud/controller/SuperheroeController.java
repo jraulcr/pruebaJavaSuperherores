@@ -27,6 +27,9 @@ import com.crud.exception.RegistroDuplicadoException;
 public class SuperheroeController {
 
 	private static final Logger LOGER = LogManager.getLogger(SuperheroeController.class);
+	private static final String ELIMINADO = "¡Superheroe eliminado ...!";
+	private static final String RESUCITADO = "¡Superheroe resucitado ...!";
+	private static final String MUERTO = "¡Superheroe muerto ...!";
 
 	@Autowired
 	private SuperheroeService superheroeService;
@@ -37,7 +40,7 @@ public class SuperheroeController {
 
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<String> save(@RequestBody SuperheroeDTO superheroeDTO) throws RegistroDuplicadoException {
+	public ResponseEntity<String> guardar(@RequestBody SuperheroeDTO superheroeDTO) throws RegistroDuplicadoException {
 		superheroeService.saveSuperheroe(superheroeDTO);
 		LOGER.info("Superheroe con id {} creado exitosamente.", superheroeDTO.getSuperheroeId());
 		String mensaje = "¡Superheroe creado ...!";
@@ -46,13 +49,13 @@ public class SuperheroeController {
 
 	@GetMapping("/find")
 	@ResponseBody
-	public List<SuperheroeDTO> getAllHeroes() {
+	public List<SuperheroeDTO> getTodosHeroes() {
 		LOGER.info("Buscando todos los superhéroes.");
 		return superheroeService.getAllSuperheroes();
 	}
 
 	@GetMapping("/find/{heroe_id}")
-	public Optional<SuperheroeDTO> find(@PathVariable(value = "heroe_id") Long heroe_id) {
+	public Optional<SuperheroeDTO> buscarPorId(@PathVariable(value = "heroe_id") Long heroe_id) {
 	    LOGER.info("Buscando el superhéroe con id {}.", heroe_id);
 		return superheroeService.getHeroeById(heroe_id);
 	}
@@ -62,7 +65,7 @@ public class SuperheroeController {
 	public ResponseEntity<String> matarSuperheroe(@PathVariable(value = "heroe_id") Long heroe_id) {
 		LOGER.info("Matando al superhéroe con id {}.", heroe_id);
 		superheroeService.matar(heroe_id);
-	    String mensaje = "¡Superheroe muerto ...!";
+	    String mensaje = MUERTO;
 	    return new ResponseEntity<>(mensaje, HttpStatus.OK);
 	}
 
@@ -71,16 +74,16 @@ public class SuperheroeController {
 	public ResponseEntity<String> resucitarSuperheroe(@PathVariable(value = "heroe_id") Long heroe_id) {
 		LOGER.info("Resucitando al superhéroe con id {}.", heroe_id);
 		superheroeService.resucitar(heroe_id);
-	    String mensaje = "¡Superheroe resucitado ...!";
+	    String mensaje = RESUCITADO;
 	    return new ResponseEntity<>(mensaje, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{heroe_id}")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<String> deleteHeroeId(@PathVariable(value = "heroe_id") Long heroe_id) {
+	public ResponseEntity<String> borrarHeroeId(@PathVariable(value = "heroe_id") Long heroe_id) {
 		LOGER.info("Eliminando al superhéroe con id {}.", heroe_id);
 		superheroeService.delete(heroe_id);
-	    String mensaje = "¡Superheroe eliminado ...!";
+	    String mensaje = ELIMINADO;
 	    return new ResponseEntity<>(mensaje, HttpStatus.OK);
 	}
 	
@@ -100,6 +103,6 @@ public class SuperheroeController {
     public ResponseEntity<List<SuperheroeDTO>> buscarPorPoder(@PathVariable(value = "poder_id") Long poder_id) {
     	List<SuperheroeDTO> superheroeDTOList = superheroeService.buscarPorPoder(poder_id);
         return new ResponseEntity<>(superheroeDTOList, HttpStatus.OK);
-    }            
+    }          
     
 }

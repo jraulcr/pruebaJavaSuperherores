@@ -48,4 +48,12 @@ public class Universo implements Serializable {
 		this.nombreUniverso = nombreUniverso;
 	}
 
+	public List<Superheroe> getSuperheroes() {
+		return superheroes;
+	}
+
+	public void setSuperheroes(List<Superheroe> superheroes) {
+		this.superheroes = superheroes;
+	}
+
 }

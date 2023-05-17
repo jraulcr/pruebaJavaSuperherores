@@ -56,6 +56,7 @@ public class Superheroe implements Serializable {
 	inverseJoinColumns = @JoinColumn(name = "poder_id", nullable = false))
 	private List<Poder> poderes;
 
+	
 	public Long getHeroeId() {
 		return heroeId;
 	}
@@ -102,6 +103,14 @@ public class Superheroe implements Serializable {
 
 	public void setPoderes(List<Poder> poderes) {
 		this.poderes = poderes;
+	}
+
+	public Long getUniversoId() {
+		return universoId;
+	}
+
+	public void setUniversoId(Long universoId) {
+		this.universoId = universoId;
 	}
 	
 }

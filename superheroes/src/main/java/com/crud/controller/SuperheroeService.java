@@ -47,7 +47,6 @@ public class SuperheroeService {
 	}		
 	
 	public void saveSuperheroe(SuperheroeDTO superheroeDTO) throws RegistroDuplicadoException {
-	    // Crear instancia de Superheroe y asignarle los valores del DTO
 	    Superheroe superheroe = new Superheroe();
 	    Universo universo = new Universo();
 	    List<Poder> poderes = new ArrayList<>(); 	    
@@ -58,30 +57,28 @@ public class SuperheroeService {
 	    superheroe.setEstado(superheroeDTO.getEstado());
 	    superheroe.setUniverso(universo);
 	    superheroe.setPoderes(poderes);
-
-	    // Verificar si el Superheroe ya existe en la base de datos
+	
 	    superheroeRepository.findById(superheroe.getHeroeId())
-        .ifPresent(s -> {
-            throw new RegistroDuplicadoException(superheroeDTO.getSuperheroeId());
-        });  	    
-
+	    .ifPresent(s -> {
+	        throw new RegistroDuplicadoException(superheroeDTO.getSuperheroeId());
+	    });  	    
+	
 	    universo.setUniversoId(superheroeDTO.getUniverso().getUniversoId());
 	    universo.setNombreUniverso(superheroeDTO.getUniverso().getNombreUniverso());
-
-	    // Buscar el objeto Universo asociado al Superheroe
+	
 	    Optional<Universo> universoExistente = universoRepository.findById(universo.getUniversoId());
-
-	    if(universoExistente.isPresent()) {
-	        // Si el objeto Universo ya existe, no lo guardamos de nuevo
-	        universo = universoExistente.get();
-	    } else {
-	        // Si el objeto Universo no existe, lo guardamos en la base de datos
-	        universoRepository.save(universo);
-	    }	    
+	
+	    universoExistente.ifPresentOrElse(
+	    	    u -> {
+	    	    },
+	    	    () -> {
+	    	        Universo nuevoUniverso = new Universo();
+	    	        nuevoUniverso.setUniversoId(universo.getUniversoId());
+	    	        nuevoUniverso.setNombreUniverso(universo.getNombreUniverso());
+	    	        universoRepository.save(nuevoUniverso);
+	    	    }
+	    	);	    
 	    
-	    universoRepository.save(universo);
-
-	    // Buscar o crear los objetos Poder asociados al Superheroe    
 	    poderes.addAll(superheroeDTO.getPoderes().stream()
 	    	    .map(p -> {
 	    	            Optional<Poder> poderOptional = poderRepository.findById(p.getPoderId());
@@ -94,7 +91,7 @@ public class SuperheroeService {
 	    	                return poderRepository.save(poder);
 	    	            }
 	    	    })
-	    	    .collect(Collectors.toSet()));   
+	    	    .collect(Collectors.toSet()));  
 	    	    
 	    superheroeRepository.save(superheroe);
 	}
@@ -126,17 +123,13 @@ public class SuperheroeService {
 	    Superheroe superheroe = superheroeRepository.findById(id)
 	            .orElseThrow(() -> new NoHayHeroeException(id));
 	    Universo universo = superheroe.getUniverso();
-	    // Verificar si hay otros superhéroes asociados a este universo
 	    boolean existenOtrosSuperheroes = superheroeRepository.existsByUniversoId(universo.getUniversoId());
 	    if (!existenOtrosSuperheroes) {
 	        universoRepository.delete(universo);
 	    }
 	    
-	 // Eliminar los registros relacionados en la tabla intermedia
 	    superheroe.getPoderes().forEach(poder -> poder.getSuperheroes().remove(superheroe));
-	    superheroe.getPoderes().clear();
-
-	    // Verificar si otros superhéroes todavía usan el poder
+        
 	    for (Poder poder : poderRepository.findAll()) {
 	        if (poder.getSuperheroes().isEmpty()) {
 	            poderRepository.delete(poder);
@@ -160,33 +153,31 @@ public class SuperheroeService {
                 .collect(Collectors.toList());
     }     
     
-    public List<SuperheroeDTO> buscarPorPoder(Long id) {
-        return poderRepository.findById(id)
-                .map(poder -> superheroeRepository.findByPoderesIn(Collections.singletonList(poder)))
-                .orElseThrow(() -> new NoHayPoderException(id))
-                .stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
-    }
-  
-	// Método para convertir una lista de entidades Superheroe a una lista de DTOs SuperheroeDTO
 	private List<SuperheroeDTO> mapToDTOList(List<Superheroe> superheroes) {
 	    return superheroes.stream().map(this::mapToDTO).collect(Collectors.toList());
 	}
 
-	// Método para convertir una entidad Superheroe a DTO SuperheroeDTO
+    public List<SuperheroeDTO> buscarPorPoder(Long id) {
+        Poder poder = poderRepository.findById(id)
+                .orElseThrow(() -> new NoHayPoderException(id));
+        
+        return superheroeRepository.findByPoderesIn(Collections.singletonList(poder))
+                .stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+    
 	private SuperheroeDTO mapToDTO(Superheroe superheroe) {
 	    SuperheroeDTO dto = new SuperheroeDTO();
 	    dto.setSuperheroeId(superheroe.getHeroeId());
 	    dto.setNombre(superheroe.getNombre());
 	    dto.setGenero(superheroe.getGenero());
 	    dto.setEstado(superheroe.getEstado());
-	    dto.setPoderes(new ArrayList<>(superheroe.getPoderes().stream().map(this::mapToPoderDTO).collect(Collectors.toSet())));
+	    dto.setPoderes(superheroe.getPoderes().stream().map(this::mapToPoderDTO).collect(Collectors.toList()));
 	    dto.setUniverso(mapToUniversoDTO(superheroe.getUniverso()));
 	    return dto;
 	}
 
-	// Método para convertir una entidad Universo a DTO UniversoDTO
 	private UniversoDTO mapToUniversoDTO(Universo universo) {
 	    UniversoDTO dto = new UniversoDTO();
 	    dto.setUniversoId(universo.getUniversoId());
@@ -194,7 +185,6 @@ public class SuperheroeService {
 	    return dto;
 	}
 
-	// Método para convertir una entidad Poder a DTO PoderDTO
 	private PoderDTO mapToPoderDTO(Poder poder) {
 	    PoderDTO dto = new PoderDTO();
 	    dto.setPoderId(poder.getPoderId());
